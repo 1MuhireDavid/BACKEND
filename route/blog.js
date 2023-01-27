@@ -1,31 +1,19 @@
 const express = require("express");
-const blogController=require('../controllers/blog');
+const { get } = require("mongoose");
+const { createBlog, getAllBlog,
+getOneBlog, updateBlog,
+deleteBlog, deleteAllBlog } = require('../controllers/blog');
 const router = express.Router();
-
 //Create post
-router.post("/", blogController.createBlog,(req,res)=>{
-    res.send(req.post);
-  });
+router.post("/",createBlog);
   //View all Post
-  router.get('/',blogController.getAllBlog,(req,res)=>{
-    res.send(req.posts);
-  });
-  
+  router.get("/", getAllBlog);
   //View individual Post
-  router.get("/:id", blogController.getOneBlog,(req,res)=>{
-    res.send(req.post);
-  });
+  router.get("/:id", getOneBlog);
   //update post
-  router.patch("/:id",blogController.updateBlog,(req,res)=>{
-    res.send(req.post);
-  } );
+  router.patch("/:id", updateBlog);
   //Delete one Post
-  router.delete("/:id", blogController.deleteBlog,(req,res)=>{
-    res.send("Post deleted Successfully");
-  });
-  
+  router.delete("/:id", deleteBlog);
   //Delete all post
-   router.delete('/',blogController.deleteAllBlog,(req,res)=>{
-     res.send("All Post deleted Successfully");
-   })
+   router.delete("/", deleteAllBlog);
   module.exports = router;

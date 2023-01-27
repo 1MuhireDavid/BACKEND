@@ -1,12 +1,8 @@
-const express = require('express');
-
 const Post = require('../module/blog');
-
-
 
 //Save post in database
 
-createBlog = async (req, res) => {
+const createBlog = async (req, res) => {
     const blog = new Post({
       title: req.body.title,
       description: req.body.description,
@@ -15,6 +11,7 @@ createBlog = async (req, res) => {
      await blog.save();
     res.send(blog);
   };
+  
   //View all Post
   const getAllBlog = async(req,res)=>{ 
       try {
