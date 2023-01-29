@@ -1,19 +1,45 @@
 const Post = require('../module/blog');
-
+const Joi = require("joi");
 //Save post in database
 
 const createBlog = async (req, res) => {
+  let responseObject, status;
+  const schema = Joi.object({
+    title: Joi.string().required(),
+    description: Joi.string().required(),
+    imageUrl: Joi.string().uri().required(),
+  });
+  const { error } = schema.validate(req.body);
+
+  if(error){
+   console.log(error);
+   status=500;
+   responseObject = {error: "Internal error"}
+  }
+   
     const blog = new Post({
       title: req.body.title,
       description: req.body.description,
       imageUrl: req.body.imageUrl
     });
+    try {
+
      await blog.save();
-    res.send(blog);
+     status=201;
+   responseObject = {message: "Blog has been successfully created"};
+    } catch (error) {
+      status=500;
+   responseObject = {error: "Internal error"}
+    }
+
+    res.status(status).json(responseObject);
+  
+    
   };
   
   //View all Post
   const getAllBlog = async(req,res)=>{ 
+
       try {
           const posts= await Post.find({});
           res.send(posts);

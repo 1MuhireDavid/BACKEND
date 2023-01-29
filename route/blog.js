@@ -6,6 +6,7 @@ deleteBlog, deleteAllBlog } = require('../controllers/blog');
 const router = express.Router();
 //Create post
 router.post("/",createBlog);
+
   //View all Post
   router.get("/", getAllBlog);
   //View individual Post
