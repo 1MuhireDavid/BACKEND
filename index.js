@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const blogRoute = require('./route/blog');
 const bodyParser = require('body-parser');
+const signinRoutes = require("./route/signin");
+const signupRoutes =require('./route/user.routes');
 const port = 3000;
 require('dotenv/config'); 
 const app = express();
@@ -9,7 +11,8 @@ const app = express();
 // ROUTES
 app.use(bodyParser.json());
 app.use('/posts',blogRoute); 
-
+app.use("/signup", signupRoutes);
+app.use("/signin", signinRoutes);
 
 
 // ENDPOINTS 
