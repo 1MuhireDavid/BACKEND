@@ -13,6 +13,7 @@ router.post("/",createBlog);
   router.get("/:id", getOneBlog);
   //update post
   router.patch("/:id", updateBlog);
+  
   //Delete one Post
   router.delete("/:id", deleteBlog);
   //Delete all post

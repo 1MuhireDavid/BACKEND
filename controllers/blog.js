@@ -31,10 +31,7 @@ const createBlog = async (req, res) => {
       status=500;
    responseObject = {error: "Internal error"}
     }
-
     res.status(status).json(responseObject);
-  
-    
   };
   
   //View all Post
