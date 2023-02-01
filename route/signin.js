@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
       userId: user.id,
       email: user.email,
     };
-    const token = jwt.sign(UserExist, process.env.TOKEN_SECRET);
+    const token = jwt.sign(UserExist, process.env.ACCESS_TOKEN_SECRET);
     res.setHeader("Authorization", `Bearer ${token}`);
     res.send({
       status: "success",
