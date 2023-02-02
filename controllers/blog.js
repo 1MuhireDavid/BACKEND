@@ -25,7 +25,7 @@ const createBlog = async (req, res) => {
     try {
 
      await blog.save();
-     status=201;
+     status=200;
    responseObject = {message: "Blog has been successfully created"};
     } catch (error) {
       status=500;
@@ -58,7 +58,7 @@ const createBlog = async (req, res) => {
   };
   //update post
   const updateBlog = async (req, res) => {
-    try {
+    
       const post = await Post.findOne({ _id: req.params.id });
       if (req.body.title) {
         post.title = req.body.title;
@@ -66,21 +66,22 @@ const createBlog = async (req, res) => {
       if (req.body.description) {
         post.description = req.body.description;
       }
+      try {
       await post.save();
       res.send(post);
-    } catch {
-      res.status(404);
-      res.send({ error: "Post doesn't exist!" });
+    } catch (error) {
+      res.status(404).json({ message: "Post doesn't exist!" });
     }
   };
   //Delete one Post
   const deleteBlog = async (req, res) => {
+    
     try {
-      await Post.deleteOne({_id:req.params.id})
-      res.status(202).send();
+     const post = await Post.findByIdAndRemove(req.params.id);
+      console.log(post)
+      res.status(202).send({message: "Blog has been successfully deleted"});
     } catch {
-      res.status(404);
-      res.send({ error: "Post doesn't exist!" });
+      res.status(404).send({ error: "Post doesn't exist!" });
     }
   };
  

@@ -18,54 +18,57 @@ const createUser = async (req, res) => {
     password: req.body.password,
   });
   await user.save();
-  res.send(user);
-  //Create and assign JWT
-  const token =jwt.sign({_id:user._id},process.env.TOKEN_SECRET);
-  res.header("auth-token",token).send(user,token);
-};
-
+  res.status(201).send(user)
+}
 //Retrieve All User
 const getAllUser = async (req, res) => {
-  const users = await User.find();
-  res.send(users);
+  try {
+    const users = await User.find({});
+    res.status(200).send(users);
+  } catch (error) {
+    res.status(404).send({error:"Failed to retreive all post!"});
+  }
+
 };
 //Retreive only one user
 const getOneUser = async (req, res) => {
-  const user = await User.findOne({
-    _id: req.params.id,
-  });
-  res.send(user);
+  
+
+  try {
+    const user = await User.findOne({
+      _id: req.params.id,
+    });
+    res.status(200).send(user);
+  } catch (error) {
+    
+    return res.status(404).json({error: "No user with such ID was found"});
+  }
+  
 };
 const updateUser = async (req, res) => {
-  const { error, value } = validateUser(req.body);
+  const { error } = validateUser(req.body);
   if (error) {
-    console.log(error);
-    return res.status(400).send(error.details);
+    return res.status(400).send(error.details[0].message);
   }
   //Check if user exists
-  let user = await User.findById(mongoose.Types.ObjectId(req.params.id));
+  let user = await User.findById(req.params.id);
   if (!user) return res.status(400).send("User Not Found");
-  //Hash Password if it was updated
-  if (req.body.password !== req.body.confirmedPassword) {
-    return res.status(400).send("Password and confirmed password do not match");
-  }
   //Hash password if it updated
   if (req.body.password) {
     req.body.password = await hashPassword(req.body.password);
   }
   //Update User
-  user = await User.findByIdAndUpdate(
-    mongoose.Types.ObjectId(req.params.id),
+  user = await User.findByIdAndUpdate(req.params.id),
     req.body,
     { new: true }
-  );
-  res.send(user);
+  ;
+  res.status(200).json(user);
 };
 const deleteUser = async (req, res) => {
   const user = await User.findByIdAndRemove(req.params.id);
   if (!user)
     return res.status(404).send("The user with the given ID was not found");
-  res.send({ error: `user with id ${req.params.id} deleted Successfully` });
+  res.status(200).send({ error: `user with id ${req.params.id} deleted Successfully` });
 };
 module.exports = {
   getAllUser,
