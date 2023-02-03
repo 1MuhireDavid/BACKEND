@@ -15,18 +15,23 @@ const createUser = async (req, res) => {
   req.body.password = await hashPassword(req.body.password);
   user = new User({
     email: req.body.email,
-    password: req.body.password,
+    password: req.body.password
   });
-  await user.save();
-  res.status(201).send(user)
+  try {
+    await user.save();
+    res.status(201).json({data: user})
+  } catch (error) {
+    res.status(500).json({error: "failed to create a user"})
+  }
+
 }
 //Retrieve All User
 const getAllUser = async (req, res) => {
   try {
     const users = await User.find({});
-    res.status(200).send(users);
+    res.status(200).json({data: users});
   } catch (error) {
-    res.status(404).send({error:"Failed to retreive all post!"});
+    res.status(404).json({error:"Failed to retreive all post!"});
   }
 
 };
@@ -38,7 +43,7 @@ const getOneUser = async (req, res) => {
     const user = await User.findOne({
       _id: req.params.id,
     });
-    res.status(200).send(user);
+    res.status(200).json({data: user});
   } catch (error) {
     
     return res.status(404).json({error: "No user with such ID was found"});
@@ -58,17 +63,17 @@ const updateUser = async (req, res) => {
     req.body.password = await hashPassword(req.body.password);
   }
   //Update User
-  user = await User.findByIdAndUpdate(req.params.id),
+  user = await User.findByIdAndUpdate(req.params.id,
     req.body,
     { new: true }
-  ;
-  res.status(200).json(user);
+  );
+  res.status(200).json({ user });
 };
 const deleteUser = async (req, res) => {
   const user = await User.findByIdAndRemove(req.params.id);
   if (!user)
     return res.status(404).send("The user with the given ID was not found");
-  res.status(200).send({ error: `user with id ${req.params.id} deleted Successfully` });
+  res.status(200).json({ message: `user with id ${req.params.id} deleted Successfully` });
 };
 module.exports = {
   getAllUser,

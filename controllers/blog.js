@@ -39,10 +39,9 @@ const createBlog = async (req, res) => {
 
       try {
           const posts= await Post.find({});
-          res.send(posts);
+          res.json({data: posts});
       } catch{
-          res.status(404);
-          res.send({error:"Failed to retreive all post!"});
+          res.status(404).json({error:"Failed to retreive all post!"});
       }
   };
  
@@ -50,10 +49,9 @@ const createBlog = async (req, res) => {
   const getOneBlog = async (req, res) => {
     try {
       const post = await Post.findOne({ _id: req.params.id });
-      res.send(post);
+      res.status(200).json({data: post });
     } catch {
-      res.status(404);
-      res.send({ error: "Post doesn't exist!" });
+      res.status(404).json({ error: "Post doesn't exist!" });
     }
   };
   //update post
@@ -79,29 +77,18 @@ const createBlog = async (req, res) => {
     try {
      const post = await Post.findByIdAndRemove(req.params.id);
       console.log(post)
-      res.status(202).send({message: "Blog has been successfully deleted"});
+      res.status(202).json({message: "Blog has been successfully deleted"});
     } catch {
-      res.status(404).send({ error: "Post doesn't exist!" });
+      res.status(404).json({ error: "Post doesn't exist!" });
     }
   };
  
-  //Delete all post
-  const deleteAllBlog = async(req,res)=>{
-      try {
-          await Post.deleteMany({})
-          res.status(202).send();    
-      } catch {
-          res.status(404);
-          res.send({error:"Failed to delete all Post!"});
-      }  
-  };
 
 module.exports = {
   createBlog: createBlog,
   getAllBlog: getAllBlog,
   getOneBlog: getOneBlog,
   updateBlog: updateBlog,
-  deleteBlog: deleteBlog,
-  deleteAllBlog:deleteAllBlog
+  deleteBlog: deleteBlog
 };
 

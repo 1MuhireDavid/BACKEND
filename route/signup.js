@@ -5,7 +5,7 @@ const {createUser}=require('../controllers/user.controller');
  * @swagger
  * /signup:
  *   post:
- *     summary: Cresates a new user.
+ *     summary: Creates a new user.
  *     tags: [users]
  *     requestBody:
  *       required: true

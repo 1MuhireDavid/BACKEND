@@ -50,31 +50,29 @@ router.get("/:id", userController.getOneUser);
 /**
  * @swagger
  * /users/{id}: 
- *   patch:
- *     description: For updating a user
+ *   put:
+ *     summary: Updating the user information for a specified user
  *     tags: [users]
  *     parameters:
  *       - in: path
  *         name: id
- *         description: The unique identifier of the user 
- *         required: true
- *         type: string
- *       - in: body
- *         name: body
- *         description: The updated user information
- *         required: true
  *         schema:
- *           type: object
- *           properties:
- *             email:
- *               type: string
- *               format: email
- *             password:
- *               type: string
- *               format: password
+ *           type: string
+ *         required: true
+ *         description: The unique identifier of the user 
+ *     requestBody:
+ *       required: true
+ *       content: 
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
  *     responses:
- *       201:
+ *       200:
  *         description: user has been successfully updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
  *       400:
  *         decription: Invalid user information
  *         schema:
@@ -87,7 +85,7 @@ router.get("/:id", userController.getOneUser);
  *         decription: user has not been found
  */
 //update user 
-router.patch('/:id',userController.updateUser);
+router.put('/:id',userController.updateUser);
 /**
  * @swagger
  * /users/{id}: 
