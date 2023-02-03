@@ -40,7 +40,6 @@ const options = {
     apis: ['route/*.js','module/*.js'],
 }
 const specs = swaggerJsDoc(options)
-
 // ROUTES 
 app.use(bodyParser.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
@@ -48,7 +47,6 @@ app.use('/posts',blogRoute);
 app.use("/signup", signupRoutes);
 app.use("/signin", signinRoutes);
 app.use("/users", users);
-
 
 
 // ENDPOINTS 

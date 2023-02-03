@@ -22,7 +22,6 @@ const {createUser}=require('../controllers/user.controller');
  *         description: User has not been created successfully
  * 
  */
-
 router.post('/',createUser);
 
 module.exports=router;

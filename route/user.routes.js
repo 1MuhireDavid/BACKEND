@@ -110,6 +110,7 @@ router.put('/:id',userController.updateUser);
  *       404:
  *         description: user not found
  */
+
 //deleter User
 router.delete('/:id',userController.deleteUser);
 
