@@ -25,7 +25,7 @@ const createBlog = async (req, res) => {
     try {
 
      await blog.save();
-     status=201;
+     status=200;
    responseObject = {message: "Blog has been successfully created"};
     } catch (error) {
       status=500;
@@ -39,10 +39,9 @@ const createBlog = async (req, res) => {
 
       try {
           const posts= await Post.find({});
-          res.send(posts);
+          res.json({data: posts});
       } catch{
-          res.status(404);
-          res.send({error:"Failed to retreive all post!"});
+          res.status(404).json({error:"Failed to retreive all post!"});
       }
   };
  
@@ -50,15 +49,14 @@ const createBlog = async (req, res) => {
   const getOneBlog = async (req, res) => {
     try {
       const post = await Post.findOne({ _id: req.params.id });
-      res.send(post);
+      res.status(200).json({data: post });
     } catch {
-      res.status(404);
-      res.send({ error: "Post doesn't exist!" });
+      res.status(404).json({ error: "Post doesn't exist!" });
     }
   };
   //update post
   const updateBlog = async (req, res) => {
-    try {
+    
       const post = await Post.findOne({ _id: req.params.id });
       if (req.body.title) {
         post.title = req.body.title;
@@ -66,41 +64,31 @@ const createBlog = async (req, res) => {
       if (req.body.description) {
         post.description = req.body.description;
       }
+      try {
       await post.save();
       res.send(post);
-    } catch {
-      res.status(404);
-      res.send({ error: "Post doesn't exist!" });
+    } catch (error) {
+      res.status(404).json({ message: "Post doesn't exist!" });
     }
   };
   //Delete one Post
   const deleteBlog = async (req, res) => {
+    
     try {
-      await Post.deleteOne({_id:req.params.id})
-      res.status(202).send();
+     const post = await Post.findByIdAndRemove(req.params.id);
+      console.log(post)
+      res.status(202).json({message: "Blog has been successfully deleted"});
     } catch {
-      res.status(404);
-      res.send({ error: "Post doesn't exist!" });
+      res.status(404).json({ error: "Post doesn't exist!" });
     }
   };
  
-  //Delete all post
-  const deleteAllBlog = async(req,res)=>{
-      try {
-          await Post.deleteMany({})
-          res.status(202).send();    
-      } catch {
-          res.status(404);
-          res.send({error:"Failed to delete all Post!"});
-      }  
-  };
 
 module.exports = {
   createBlog: createBlog,
   getAllBlog: getAllBlog,
   getOneBlog: getOneBlog,
   updateBlog: updateBlog,
-  deleteBlog: deleteBlog,
-  deleteAllBlog:deleteAllBlog
+  deleteBlog: deleteBlog
 };
 

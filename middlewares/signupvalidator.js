@@ -9,8 +9,8 @@ const validateUser = user=> {
   return schema.validate(user);
 };
 const hashPassword = async (password) => {
-  const saltRounds = 10;
-  return await bcrypt.hash(password, saltRounds);
+  const salt = 10;
+  return await bcrypt.hash(password, salt);
 };
 module.exports = {
   validateUser,
