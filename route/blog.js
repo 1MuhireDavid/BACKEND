@@ -113,7 +113,7 @@ router.post("/",createBlog);
   //Delete one Post
 /**
  * @swagger
- * /users/{id}: 
+ * /posts/{id}: 
  *   delete: 
  *     summary: For deleting a blog
  *     tags: [blog]
@@ -123,17 +123,17 @@ router.post("/",createBlog);
  *         schema: 
  *           type: string
  *         required: true
- *         description: The blog id
+ *         description: The user id
  *     description: Returns deleted blog
  *     responses:
  *       200:
- *         description: blog successfully deleted
+ *         description: user successfully deleted
  *         content:
  *           application/json:
  *             schema:
  *               type: '#/components/schemas/User'
  *       404:
- *         description: user not found
+ *         description: blog not found
  */
   router.delete("/:id", authenticate, deleteBlog);
   module.exports = router;
