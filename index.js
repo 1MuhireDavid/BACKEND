@@ -7,10 +7,10 @@ const bodyParser = require('body-parser');
 const signinRoutes =require("./route/signin");
 const signupRoutes =require('./route/signup');
 const users = require('./route/user.routes')
-const port = 3000;
+const message = require('./route/contact-message');
 require('dotenv/config'); 
 const app = express();
-
+const PORT = 3000;
 const options = {
     swaggerDefinition: {
         openapi: '3.0.0',
@@ -47,6 +47,7 @@ app.use('/posts',blogRoute);
 app.use("/signup", signupRoutes);
 app.use("/signin", signinRoutes);
 app.use("/users", users);
+app.use("/contactUs", message);
 
 
 // ENDPOINTS 
@@ -57,8 +58,7 @@ app.get('/',(req,res)=>{
 mongoose.set("strictQuery",true);
 mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true }, () => console.log('connected to DB'));
         
-        
-app.listen(port,()=>{
-            console.log(`Server started on ${port}`);
-        })
+app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
+  });       
 module.exports = app
