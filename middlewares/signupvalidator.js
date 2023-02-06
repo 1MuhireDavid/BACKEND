@@ -8,11 +8,20 @@ const validateUser = user=> {
   });
   return schema.validate(user);
 };
+const validateMessage = message=> {
+  const schema = Joi.object( {
+    name: Joi.string().required(),
+    email: Joi.string().email().required(),
+    description: Joi.string().required(),
+  });
+  return schema.validate(message);
+};
 const hashPassword = async (password) => {
   const salt = 10;
   return await bcrypt.hash(password, salt);
 };
 module.exports = {
   validateUser,
+  validateMessage,
   hashPassword,
 };
