@@ -19,7 +19,7 @@ const createUser = async (req, res) => {
   });
   try {
     await user.save();
-    res.status(201).json({data: user})
+    res.status(201).json({message: "User successfully created", data: user})
   } catch (error) {
     res.status(500).json({error: "failed to create a user"})
   }
@@ -29,7 +29,8 @@ const createUser = async (req, res) => {
 const getAllUser = async (req, res) => {
   try {
     const users = await User.find({});
-    res.status(200).json({data: users});
+    res.status(200).send({data: users});
+   // res.status(200).send(users);
   } catch (error) {
     res.status(404).json({error:"Failed to retreive all post!"});
   }

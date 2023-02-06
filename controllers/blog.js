@@ -25,21 +25,25 @@ const createBlog = async (req, res) => {
     try {
 
      await blog.save();
-     status=200;
+     status=201;
    responseObject = {message: "Blog has been successfully created"};
     } catch (error) {
       status=500;
    responseObject = {error: "Internal error"}
     }
-    res.status(status).json(responseObject);
+    res.status(status).json({responseObject, blog});
   };
+  const createComment = (req, res) => {
+    
+
+  }
   
   //View all Post
   const getAllBlog = async(req,res)=>{ 
 
       try {
           const posts= await Post.find({});
-          res.json({data: posts});
+          res.status(200).json({data: posts});
       } catch{
           res.status(404).json({error:"Failed to retreive all post!"});
       }
