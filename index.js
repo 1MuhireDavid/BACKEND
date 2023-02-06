@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const blogRoute = require('./route/blog');
 const swaggerUi = require('swagger-ui-express');
@@ -42,6 +43,7 @@ const options = {
 const specs = swaggerJsDoc(options)
 // ROUTES 
 app.use(bodyParser.json());
+app.use(cors());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use('/posts',blogRoute); 
 app.use("/signup", signupRoutes);
