@@ -22,6 +22,7 @@ const createBlog = async (req, res) => {
       description: req.body.description,
       imageUrl: req.body.imageUrl
     });
+    console.log(blog)
     try {
 
      await blog.save();

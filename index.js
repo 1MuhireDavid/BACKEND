@@ -11,7 +11,7 @@ const users = require('./route/user.routes')
 const message = require('./route/contact-message');
 require('dotenv/config'); 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const options = {
     swaggerDefinition: {
         openapi: '3.0.0',
@@ -34,7 +34,7 @@ const options = {
             bearerAuth: []
         }],
         servers: [{
-            url: 'http://localhost:3000'
+            url: 'https://mybrand-backend-tv4i.onrender.com'
         }]
         
     },
