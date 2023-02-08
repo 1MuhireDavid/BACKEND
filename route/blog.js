@@ -124,6 +124,8 @@ router.post("/",createBlog);
  *           type: string
  *         required: true
  *         description: The user id
+ *     security:
+ *      - bearerAuth: []
  *     description: Returns deleted blog
  *     responses:
  *       200:
@@ -131,7 +133,7 @@ router.post("/",createBlog);
  *         content:
  *           application/json:
  *             schema:
- *               type: '#/components/schemas/User'
+ *               type: '#/components/schemas/Blog'
  *       404:
  *         description: blog not found
  */

@@ -14,7 +14,8 @@ const createBlog = async (req, res) => {
   if(error){
    console.log(error);
    status=500;
-   responseObject = {error: "Internal error"}
+   responseObject = {error: error}
+   return res.status(status).json({responseObject})
   }
    
     const blog = new Post({
@@ -32,7 +33,7 @@ const createBlog = async (req, res) => {
       status=500;
    responseObject = {error: "Internal error"}
     }
-    res.status(status).json({responseObject, blog});
+    res.status(status).json({responseObject});
   };
   const createComment = (req, res) => {
     

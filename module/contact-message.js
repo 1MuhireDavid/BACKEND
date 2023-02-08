@@ -21,7 +21,7 @@ const mongoose= require('mongoose');
  *         description:
  *           type: string
  *       example:
- *         name: MUGISHA INNOCENT
+ *         name: MUGISHA 
  *         email: user@gmail.com
  *         description: I liked your work
  */
