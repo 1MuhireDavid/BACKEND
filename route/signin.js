@@ -52,7 +52,7 @@ router.post("/", async (req, res) => {
       return res.status(400).send("User not Found");
     }
     if (!password) {
-      res.status().send("Password is wrong");
+      res.status(400).send("Password is wrong");
     }
     const UserExist = {
       userId: user.id,
@@ -64,6 +64,7 @@ router.post("/", async (req, res) => {
       status: "success",
       message: `welcome ${user.email}`,
       data: token,
+      role: user.role,
     });
   } catch (error) {
     res.status(400).send("Not Authorized");

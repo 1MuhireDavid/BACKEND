@@ -18,12 +18,17 @@ const mongoose= require('mongoose');
  *         password:
  *           type: string
  *           format: password
+ *         role:
+ *           type: string
  *       example:
  *         email: user@gmail.com
  *         password: test12 
+ *         role: user
  */
 const schema= mongoose.Schema({
     email:String,
-    password:String
+    password:String,
+    role:String,
+    token: String
 })
 module.exports=mongoose.model("User",schema);

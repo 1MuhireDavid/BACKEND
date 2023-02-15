@@ -13,7 +13,7 @@ const authenticate = (req, res, next) => {
           authentication: "Please Login first",
         },
       });
-    }
+    }  
     const decoded = jwt.verify(authToken, process.env.ACCESS_TOKEN_SECRET);
 if(decoded.errors || !decoded)
     {
@@ -24,5 +24,6 @@ if(decoded.errors || !decoded)
   } catch (error) {
     res.status(401).send({ status: "fail", message: "Unauthorized" });
   }
-};
+}; 
 module.exports = authenticate;
+ 

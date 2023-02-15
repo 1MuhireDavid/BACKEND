@@ -13,9 +13,11 @@ const createUser = async (req, res) => {
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.status(400).send("User already registered");
   req.body.password = await hashPassword(req.body.password);
+  let userRole = "user"
   user = new User({
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+    role: userRole
   });
   console.log(user)
   try {

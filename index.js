@@ -34,7 +34,7 @@ const options = {
             bearerAuth: []
         }],
         servers: [{
-            url: 'https://mybrand-backend-tv4i.onrender.com'
+            url: 'http://localhost:3000'
         }]
         
     },
@@ -64,3 +64,4 @@ app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`);
   });       
 module.exports = app
+ 

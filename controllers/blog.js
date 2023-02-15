@@ -1,5 +1,6 @@
 const Post = require('../module/blog');
 const Joi = require("joi");
+const cloudinary = require('../utils/cloudinary')
 //Save post in database
 
 const createBlog = async (req, res) => {
@@ -7,7 +8,7 @@ const createBlog = async (req, res) => {
   const schema = Joi.object({
     title: Joi.string().required(),
     description: Joi.string().required(),
-    imageUrl: Joi.string().uri().required(),
+    imageUrl: Joi.string().required(),
   });
   const { error } = schema.validate(req.body);
 
@@ -18,13 +19,23 @@ const createBlog = async (req, res) => {
    return res.status(status).json({responseObject})
   }
    
-    const blog = new Post({
-      title: req.body.title,
-      description: req.body.description,
-      imageUrl: req.body.imageUrl
-    });
-    console.log(blog)
+    
     try {
+      const result = await cloudinary.uploader.upload(req.body.imageUrl, {
+        folder: blogs,
+        //width: 300,
+        // crop: scale
+        
+      })
+      const blog = new Post({
+        title: req.body.title,
+        description: req.body.description,
+        imageUrl: {
+          public_id: result.public_id,
+          url: result.secure_url}
+      });
+      console.log(blog)
+
 
      await blog.save();
      status=201;
@@ -36,6 +47,50 @@ const createBlog = async (req, res) => {
     res.status(status).json({responseObject});
   };
   const createComment = (req, res) => {
+    const { postId } = req.params;
+  const { author, content } = req.body;
+  Post.findById(postId, (err, post) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      post.comments.push({ author, content });
+      post.save(err => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.status(200).send('Comment added successfully');
+        }
+      });
+    }
+  });
+    
+
+  }
+  const likes = (req, res) => {
+    const { postId } = req.params;
+  const { token } = req.body;
+  User.findOne({ token }, (err, user) => {
+    if (err) {
+      res.status(500).send(err);
+    } else if (!user) {
+      res.status(401).send('Unauthorized');
+    } else {
+      Post.findById(postId, (err, post) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          post.likes.push(user._id);
+          post.save(err => {
+            if (err) {
+              res.status(500).send(err);
+            } else {
+              res.status(200).send('Post liked successfully');
+            }
+          });
+        }
+      });
+    }
+  });
     
 
   }

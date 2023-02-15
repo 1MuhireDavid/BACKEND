@@ -42,17 +42,12 @@ const BlogSchema = mongoose.Schema({
   },
   comments: [
     {
-      email: {
-        type: String,
-      },
-      comment: {
-        type: String,
-      },
-    },
+      title: String,
+      comment: String,
+      date: { type: Date, default: Date.now }
+    }
   ],
-  likes: {
-    type: String
-  },
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   date: {
     type: Date,
     default: Date.now

@@ -4,6 +4,7 @@ const { createBlog, getAllBlog,
 getOneBlog, updateBlog,
 deleteBlog, deleteAllBlog } = require('../controllers/blog');
 const authenticate = require("../middlewares/auth");
+const upload = require("../middlewares/multer");
 const router = express.Router();
 /**
  * @swagger
@@ -27,7 +28,7 @@ const router = express.Router();
  * 
  */
 //Create post
-router.post("/",createBlog);
+router.post("/", upload.single('image'),createBlog);
 
 /**
  * @swagger
