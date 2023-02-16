@@ -34,7 +34,7 @@ const options = {
             bearerAuth: []
         }],
         servers: [{
-            url: 'http://localhost:3000'
+            url: 'https://mybrand-backend-tv4i.onrender.com'
         }]
         
     },

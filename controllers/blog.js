@@ -22,7 +22,7 @@ const createBlog = async (req, res) => {
     
     try {
       const result = await cloudinary.uploader.upload(req.body.imageUrl, {
-        folder: blogs,
+        folder: "blogs",
         //width: 300,
         // crop: scale
         
@@ -30,9 +30,7 @@ const createBlog = async (req, res) => {
       const blog = new Post({
         title: req.body.title,
         description: req.body.description,
-        imageUrl: {
-          public_id: result.public_id,
-          url: result.secure_url}
+        imageUrl: req.body.imageUrl
       });
       console.log(blog)
 

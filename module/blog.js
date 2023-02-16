@@ -37,8 +37,10 @@ const BlogSchema = mongoose.Schema({
     required: true
   },
   imageUrl: {
-    type: String, 
-    required: true
+  //   public_id: {type: String, 
+  //     required: true},
+   type: String, 
+      required: true
   },
   comments: [
     {
